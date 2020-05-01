@@ -16,6 +16,10 @@
 		8C3C06392458C3D400FDE185 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C3C06372458C3D400FDE185 /* Main.storyboard */; };
 		8C3C06452458C3D400FDE185 /* MapGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C06442458C3D400FDE185 /* MapGameTests.swift */; };
 		8C3C06502458C3D400FDE185 /* MapGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C064F2458C3D400FDE185 /* MapGameUITests.swift */; };
+		8C3C06602458CDCF00FDE185 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C065F2458CDCF00FDE185 /* Unit.swift */; };
+		8C3C06622458E23800FDE185 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C06612458E23800FDE185 /* Tile.swift */; };
+		8C3C06642458E2B900FDE185 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C06632458E2B900FDE185 /* Board.swift */; };
+		8C3C0666245917CC00FDE185 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C0665245917CC00FDE185 /* GlobalConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +56,10 @@
 		8C3C064B2458C3D400FDE185 /* MapGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C3C064F2458C3D400FDE185 /* MapGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGameUITests.swift; sourceTree = "<group>"; };
 		8C3C06512458C3D400FDE185 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8C3C065F2458CDCF00FDE185 /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
+		8C3C06612458E23800FDE185 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		8C3C06632458E2B900FDE185 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		8C3C0665245917CC00FDE185 /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +119,10 @@
 				8C3C06372458C3D400FDE185 /* Main.storyboard */,
 				8C3C063A2458C3D400FDE185 /* Info.plist */,
 				8C3C063B2458C3D400FDE185 /* MapGame.entitlements */,
+				8C3C065F2458CDCF00FDE185 /* Unit.swift */,
+				8C3C0665245917CC00FDE185 /* GlobalConstants.swift */,
+				8C3C06612458E23800FDE185 /* Tile.swift */,
+				8C3C06632458E2B900FDE185 /* Board.swift */,
 			);
 			path = MapGame;
 			sourceTree = "<group>";
@@ -266,6 +278,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C3C06342458C3D300FDE185 /* ViewController.swift in Sources */,
+				8C3C06602458CDCF00FDE185 /* Unit.swift in Sources */,
+				8C3C06642458E2B900FDE185 /* Board.swift in Sources */,
+				8C3C06622458E23800FDE185 /* Tile.swift in Sources */,
+				8C3C0666245917CC00FDE185 /* GlobalConstants.swift in Sources */,
 				8C3C06322458C3D300FDE185 /* GameScene.swift in Sources */,
 				8C3C062C2458C3D300FDE185 /* AppDelegate.swift in Sources */,
 			);
