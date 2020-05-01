@@ -21,6 +21,7 @@ class GameScene: SKScene {
     private var unitNode : Unit? //SKShapeNode?
     private var squareNode : SKShapeNode?
     private var spinnyNode : SKShapeNode?
+    var units = Array<Unit> = Array()
     let board = Board(r: 10, c: 10)
     let gridArray: Array<SKShapeNode> = Array()
     let selectMoveColor = SKColor.blue
@@ -154,7 +155,7 @@ class GameScene: SKScene {
                       squareNode.fillColor = selectAttackColor
                   }
               }
-            if(c-1 > -2)
+            if(c-1 > -1)
             {
                 if let squareNode = board.grid[r-2,c-1]
                 {
@@ -182,7 +183,7 @@ class GameScene: SKScene {
                      squareNode.fillColor = selectAttackColor
                  }
             }
-            if(r+1 > -1)
+            if(r+1 < board.NUM_ROWS)
             {
                 if let squareNode = board.grid[r+1,c-2]
                  {
@@ -203,7 +204,7 @@ class GameScene: SKScene {
                      squareNode.fillColor = selectAttackColor
                  }
             }
-            if(r+1 > -1)
+            if(r+1 < board.NUM_ROWS)
             {
                 if let squareNode = board.grid[r+1,c+2]
                  {
