@@ -22,6 +22,7 @@ class GameScene: SKScene {
     private var squareNode : SKShapeNode?
     private var spinnyNode : SKShapeNode?
     private var unitSelected: Bool = false
+    private var id: Int = 0
     var units: Array<Unit> = Array()
     let board = Board(r: 10, c: 10)
     let gridArray: Array<SKShapeNode> = Array()
@@ -50,38 +51,43 @@ class GameScene: SKScene {
         }
         
         
-        addCannon(r:5,c:5,team:0,id:0)
-        addCannon(r:0,c:0,team:1,id:1)
-        //let wU = (self.size.width + self.size.height) * 0.05
-        //self.unitNode = Unit.init(side: Int(self.size.height)/20,cornerRadius: wU * 0.1)
-        //self.unitNode = SKShapeNode.init(rectOf: CGSize.init(width: Int(self.size.height)/20, height: Int(self.size.height)/20), cornerRadius: wU * 0.1)
-        
-        
+        addCannon(r:5,c:5,team:0)
+        addCannon(r:0,c:0,team:1)
+        addInfantry(r: 3, c: 3, team: 0)
+        addCavalry(r: 2, c: 2, team: 0)
 
-        /*
-        unitNode = Unit.init(xPosition: 0, yPosition: 0,side: Int(self.size.height)/40, id: 1,team: 1)
-          //if let unitNode = unitNode1
-        //  {
-              unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
-              self.addChild(unitNode)
-              units.append(unitNode)
-
-     //   }
-        
-        */
         
         
         createGrid()
     }
     
-    func addCannon(r: Int, c: Int, team: Int, id: Int)
+    func addCannon(r: Int, c: Int, team: Int)
     {
-          let unitNode = Cannon.init(xPosition: r, yPosition: c,side: Int(self.size.height)/40, id: id,team: team)
-          //if let unitNode = unitNode1
-        //  {
-              unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
-              self.addChild(unitNode)
-              units.append(unitNode)
+          
+        let unitNode = Cannon.init(xPosition: r, yPosition: c,side: Int(self.size.height)/40, id: self.id,team: team)
+        self.id = self.id + 1
+
+          unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
+          self.addChild(unitNode)
+          units.append(unitNode)
+    }
+    
+    func addInfantry(r: Int, c: Int, team: Int)
+    {
+        let unitNode = Infantry.init(xPosition: r, yPosition: c,side: Int(self.size.height)/40, id: self.id,team: team)
+        self.id = self.id + 1
+        unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
+        self.addChild(unitNode)
+        units.append(unitNode)
+    }
+    
+    func addCavalry(r: Int, c: Int, team: Int)
+    {
+        let unitNode = Cavalry.init(xPosition: r, yPosition: c,side: Int(self.size.height)/40, id: self.id,team: team)
+        self.id = self.id + 1
+        unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
+        self.addChild(unitNode)
+        units.append(unitNode)
     }
     
     func createGrid()

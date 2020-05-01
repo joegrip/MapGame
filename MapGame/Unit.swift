@@ -18,6 +18,7 @@ class Unit: SKShapeNode
     var selected = false
     var ranged = false
     var damage = 50
+    var fast = false
     var alive = true
     var id = 0
     var team = 0
@@ -50,9 +51,6 @@ class Unit: SKShapeNode
         self.team = team
         self.lineWidth = 5
         self.zPosition = 1
-        let radius = CGFloat.init(side)
-        let rect = CGRect(x:-radius,y:-radius,width:radius * 2,height:radius * 2)
-        self.path = CGPath(rect: rect, transform: nil)
         if let color = teamColors[team]
         {
             self.strokeColor = color

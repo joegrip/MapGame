@@ -1,5 +1,5 @@
 //
-//  Cannon.swift
+//  Infantry.swift
 //  MapGame
 //
 //  Created by Joseph Gripenstraw on 5/1/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Cannon: Unit
+class Infantry: Unit
 {
     override init()
     {
@@ -20,15 +20,16 @@ class Cannon: Unit
         self.init()
         let radius = CGFloat.init(side)
         let rect = CGRect(x:-radius,y:-radius,width:radius * 2,height:radius * 2)
-        self.path = CGPath(rect: rect, transform: nil)
+        self.path = CGPath(ellipseIn: rect, transform: nil)
         self.setUp(xP: xPosition,yP: yPosition, side: side,id: id,team: team)
-        self.ranged = true
+        self.ranged = false
      }
 
     required init?(coder aDecoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
 }
+    
+    
