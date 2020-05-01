@@ -18,7 +18,7 @@ class GameScene: SKScene {
     
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
-    private var unitNode : SKShapeNode?
+    private var unitNode : Unit? //SKShapeNode?
     private var squareNode : SKShapeNode?
     private var spinnyNode : SKShapeNode?
     let board = Board(r: 10, c: 10)
@@ -30,7 +30,7 @@ class GameScene: SKScene {
 
 
     override func sceneDidLoad() {
-        
+
         self.lastUpdateTime = 0
         
         // Get label node from scene and store it for use later
@@ -49,22 +49,26 @@ class GameScene: SKScene {
         
         if let spinnyNode = self.spinnyNode {
             spinnyNode.lineWidth = 2.5
-            
             spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
             spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
                                               SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
+                                            SKAction.removeFromParent()]))
         }
         
         
-        let wU = (self.size.width + self.size.height) * 0.05
+        //let wU = (self.size.width + self.size.height) * 0.05
         //self.unitNode = Unit.init(side: Int(self.size.height)/20,cornerRadius: wU * 0.1)
         //self.unitNode = SKShapeNode.init(rectOf: CGSize.init(width: Int(self.size.height)/20, height: Int(self.size.height)/20), cornerRadius: wU * 0.1)
         
-        self.unitNode = Unit.init()
+        
+        self.unitNode = Unit.init(xPosition: 5, yPosition: 5,side: Int(self.size.height)/40)
         if let unitNode = self.unitNode {
-
-            unitNode.position = CGPoint(x: xUnitGridToCoord(c: exampleU.xPosition), y: yUnitGridToCoord(r: exampleU.yPosition))
+            unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
+            unitNode.name = "unit"
+             unitNode.lineWidth = 5
+             unitNode.zPosition = 1
+             unitNode.strokeColor = SKColor.green
+             unitNode.fillColor = SKColor.green
             self.addChild(unitNode)
  
                }
@@ -330,10 +334,13 @@ class GameScene: SKScene {
         let firstTouchedNode = atPoint(location).name
         if(firstTouchedNode == "unit")
         {
-            highlightMoves(r: exampleU.yPosition,c: exampleU.xPosition)
-            if(exampleU.ranged == true)
+            if let unitNode = self.unitNode
             {
-                highlightRangedAttack(r: exampleU.yPosition,c: exampleU.xPosition)
+                highlightMoves(r: unitNode.yPosition,c: unitNode.xPosition)
+                if(unitNode.ranged == true)
+                {
+                    highlightRangedAttack(r: unitNode.yPosition,c: unitNode.xPosition)
+                }
             }
         }
         else
@@ -346,9 +353,13 @@ class GameScene: SKScene {
                 {
                     if(squareNode.fillColor == selectMoveColor)
                     {
-                        exampleU.xMove(xMov: row-exampleU.xPosition)
-                        exampleU.yMove(yMov: col-exampleU.yPosition)
-                        deselectAll()
+                        if let unitNode = self.unitNode
+                        {
+                            unitNode.xMove(xMov: row-unitNode.xPosition)
+                            unitNode.yMove(yMov: col-unitNode.yPosition)
+                            deselectAll()
+                        }
+
                     }
                 }
 
@@ -388,16 +399,28 @@ class GameScene: SKScene {
         switch event.keyCode {
 
         case 125:
-            exampleU.yMove(yMov: -1)
+            if let unitNode = self.unitNode
+            {
+                unitNode.yMove(yMov: -1)
+            }
             
         case 126:
-            exampleU.yMove(yMov: 1)
+            if let unitNode = self.unitNode
+            {
+                unitNode.yMove(yMov: 1)
+            }
             
         case 124:
-            exampleU.xMove(xMov: 1)
+            if let unitNode = self.unitNode
+            {
+                unitNode.xMove(xMov: 1)
+            }
             
         case 123:
-            exampleU.xMove(xMov: -1)
+            if let unitNode = self.unitNode
+            {
+                unitNode.xMove(xMov: -1)
+            }
         default:
             break
             //print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
@@ -442,27 +465,27 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-
-        if(exampleU.dirty)
+        if let unitNode = self.unitNode
         {
-            if exampleU.alive
+            if(unitNode.dirty)
             {
-                if let unitNode = self.unitNode
+                if unitNode.alive
                 {
-
-                    unitNode.position = CGPoint(x: xUnitGridToCoord(c: exampleU.xPosition), y: yUnitGridToCoord(r: exampleU.yPosition))
+                        unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
+                    unitNode.clean()
                 }
-                exampleU.clean()
-            }
-            else
-            {
-                if let unitNode = self.unitNode
+                else
                 {
-                    unitNode.run(SKAction.removeFromParent())
+                    if let unitNode = self.unitNode
+                    {
+                        unitNode.run(SKAction.removeFromParent())
+                    }
                 }
-            }
 
+            }
+            
         }
+
         // Initialize _lastUpdateTime if it has not already been
         if (self.lastUpdateTime == 0) {
             self.lastUpdateTime = currentTime

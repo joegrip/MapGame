@@ -26,10 +26,10 @@ class Unit: SKShapeNode
         super.init()
     }
 
-    convenience init(xPosition: Int, yPosition: Int)
+    convenience init(xPosition: Int, yPosition: Int, side: Int)
     {
         self.init()
-        self.setUp(xP: xPosition,yP:yPosition)
+        self.setUp(xP: xPosition,yP: yPosition, side: side)
         // Do stuff
      }
 
@@ -38,13 +38,16 @@ class Unit: SKShapeNode
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUp(xP: Int, yP: Int)
+    func setUp(xP: Int, yP: Int, side: Int)
     {
         self.xPosition = xP
         self.yPosition = yP
         self.name = "unit"
         self.lineWidth = 5
         self.zPosition = 1
+        let radius = CGFloat.init(side)
+        let rect = CGRect(x:-radius,y:-radius,width:radius * 2,height:radius * 2)
+        self.path = CGPath(rect: rect, transform: nil)
         self.strokeColor = SKColor.green
         self.fillColor = SKColor.green
     }
