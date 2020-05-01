@@ -35,14 +35,6 @@ class GameScene: SKScene {
 
         self.lastUpdateTime = 0
         
-        // Get label node from scene and store it for use later
-        self.label = SKLabelNode.init(text: "Hello")
-        if let label = self.label
-        {
-            label.fontColor = SKColor.white
-            label.position = CGPoint(x: Int(self.size.height)/2 , y: Int(self.size.height)/2)
-            self.addChild(label)
-        }
         
         
         // Create shape node to use during mouse interaction
@@ -63,14 +55,14 @@ class GameScene: SKScene {
         //self.unitNode = SKShapeNode.init(rectOf: CGSize.init(width: Int(self.size.height)/20, height: Int(self.size.height)/20), cornerRadius: wU * 0.1)
         
         
-        var unitNode = Unit.init(xPosition: 5, yPosition: 5,side: Int(self.size.height)/40, id: 0)
+        var unitNode = Unit.init(xPosition: 5, yPosition: 5,side: Int(self.size.height)/40, id: 0,team: 0)
         //if let unitNode = unitNode1
       //  {
             unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
             self.addChild(unitNode)
             units.append(unitNode)
         
-          unitNode = Unit.init(xPosition: 0, yPosition: 0,side: Int(self.size.height)/40, id: 1)
+        unitNode = Unit.init(xPosition: 0, yPosition: 0,side: Int(self.size.height)/40, id: 1,team: 1)
           //if let unitNode = unitNode1
         //  {
               unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
@@ -360,6 +352,14 @@ class GameScene: SKScene {
         {
             if(self.unitSelected)
             {
+                for u in units
+                {
+                    if u.selected
+                    {
+                        u.selected = false
+                        self.unitSelected = false
+                    }
+                }
                 deselectAll()
             }
             for u in units
@@ -385,17 +385,30 @@ class GameScene: SKScene {
                 let row = Int(num)%10
                 if let squareNode = board.grid[col,row]
                 {
+                    var occupied = false
                     if(squareNode.fillColor == selectMoveColor)
                     {
                         for u in units
                         {
-                            if u.selected
+                            if u.xPosition == row && u.yPosition == col
                             {
-                                u.xMove(xMov: row-u.xPosition)
-                                u.yMove(yMov: col-u.yPosition)
-                                u.selected = false
-                                self.unitSelected = false
-                                deselectAll()
+                                occupied = true
+                                break
+                            }
+                        }
+                        
+                        if(!occupied)
+                        {
+                            for u in units
+                            {
+                                if u.selected
+                                {
+                                    u.xMove(xMov: row-u.xPosition)
+                                    u.yMove(yMov: col-u.yPosition)
+                                    u.selected = false
+                                    self.unitSelected = false
+                                    deselectAll()
+                                }
                             }
                         }
 
@@ -405,25 +418,7 @@ class GameScene: SKScene {
 
             }
         }
-            /*if let unitNode = self.unitNode {
-                unitNode.fillColor = selectMoveColor
-            }
-        }
-        else
-        {
-            if let num = Int(firstTouchedNode ?? "11")
-            {
-                let row = Int(num)/10
-                let col = Int(num)%10
-                if let squareNode = board.grid[row,col]
-                {
-                    squareNode.fillColor = selectMoveColor
-                }
-            }
-            
 
-        }
- */
     }
     
     override func mouseDragged(with event: NSEvent) {

@@ -9,4 +9,3 @@
 import Foundation
 let num_rows = 10
 let num_cols = 10
-
