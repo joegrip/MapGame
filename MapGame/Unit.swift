@@ -93,6 +93,11 @@ class Unit: SKShapeNode
         
     }
     
+    func rangedAttack(defender: Unit)
+    {
+        defender.takeDamage(damage: self.damage)
+    }
+    
     func clean()
     {
         self.dirty = false

@@ -350,22 +350,63 @@ class GameScene: SKScene {
 
         if(isUnit)
         {
-            if(self.unitSelected)
-            {
-                for u in units
-                {
-                    if u.selected
-                    {
-                        u.selected = false
-                        self.unitSelected = false
-                    }
-                }
-                deselectAll()
-            }
             for u in units
             {
                 if u.id == id
                 {
+                    if(self.unitSelected)
+                    {
+                        for u1 in units
+                        {
+                            if u1.selected && u1.id != u.id
+                            {
+                                //u is what was clicked on (defender)
+                                //u1 is what was prev selected (attacker)
+                                if u1.team != u.team
+                                {
+                                    if(u1.ranged && u1.alive)
+                                    {
+                                        if let squareNode = board.grid[u.xPosition,u.yPosition]
+                                        {
+                                            if(squareNode.fillColor == selectMoveColor || squareNode.fillColor == selectAttackColor)
+                                            {
+                                                u1.rangedAttack(defender: u)
+                                                u1.selected = false
+                                                u.selected = false
+                                                self.unitSelected = false
+                                                deselectAll()
+                                                return
+                                            }
+                                        }
+                                    }
+ 
+                                    u1.selected = false
+                                    u.selected = false
+                                    self.unitSelected = false
+                                    
+                                }
+                                else
+                                {
+                                    u1.selected = false
+                                    self.unitSelected = false
+                                }
+
+                            }
+                       }
+                        deselectAll()
+                    }
+                    else
+                    {
+                        for u1 in units
+                        {
+                            if u1.selected && u1.id != u.id
+                            {
+                                u1.selected = false
+                                self.unitSelected = false
+                            }
+                        }
+                    }
+                    
                     highlightMoves(r: u.yPosition,c: u.xPosition)
                     u.selected = true
                     self.unitSelected = true
@@ -512,10 +553,7 @@ class GameScene: SKScene {
                 }
                 else
                 {
-                    if let unitNode = self.unitNode
-                    {
-                        unitNode.run(SKAction.removeFromParent())
-                    }
+                    unitNode.run(SKAction.removeFromParent())
                 }
 
             }
