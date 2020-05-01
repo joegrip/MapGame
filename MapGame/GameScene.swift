@@ -21,7 +21,8 @@ class GameScene: SKScene {
     private var unitNode : Unit? //SKShapeNode?
     private var squareNode : SKShapeNode?
     private var spinnyNode : SKShapeNode?
-    var units = Array<Unit> = Array()
+    private var unitSelected: Bool = false
+    var units: Array<Unit> = Array()
     let board = Board(r: 10, c: 10)
     let gridArray: Array<SKShapeNode> = Array()
     let selectMoveColor = SKColor.blue
@@ -62,17 +63,23 @@ class GameScene: SKScene {
         //self.unitNode = SKShapeNode.init(rectOf: CGSize.init(width: Int(self.size.height)/20, height: Int(self.size.height)/20), cornerRadius: wU * 0.1)
         
         
-        self.unitNode = Unit.init(xPosition: 5, yPosition: 5,side: Int(self.size.height)/40)
-        if let unitNode = self.unitNode {
+        var unitNode = Unit.init(xPosition: 5, yPosition: 5,side: Int(self.size.height)/40, id: 0)
+        //if let unitNode = unitNode1
+      //  {
             unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
-            unitNode.name = "unit"
-             unitNode.lineWidth = 5
-             unitNode.zPosition = 1
-             unitNode.strokeColor = SKColor.green
-             unitNode.fillColor = SKColor.green
             self.addChild(unitNode)
- 
-               }
+            units.append(unitNode)
+        
+          unitNode = Unit.init(xPosition: 0, yPosition: 0,side: Int(self.size.height)/40, id: 1)
+          //if let unitNode = unitNode1
+        //  {
+              unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
+              self.addChild(unitNode)
+              units.append(unitNode)
+
+     //   }
+        
+        
         createGrid()
     }
     
@@ -333,16 +340,42 @@ class GameScene: SKScene {
         //self.touchDown(atPoint: event.location(in: self))
         let location = event.location(in: self)
         let firstTouchedNode = atPoint(location).name
-        if(firstTouchedNode == "unit")
+        var isUnit = false
+        var id = 0
+        if let name = firstTouchedNode
         {
-            if let unitNode = self.unitNode
+            if name.count > 4
             {
-                highlightMoves(r: unitNode.yPosition,c: unitNode.xPosition)
-                if(unitNode.ranged == true)
+                let substr = name.prefix(4)
+                if substr == "unit"
                 {
-                    highlightRangedAttack(r: unitNode.yPosition,c: unitNode.xPosition)
+                    isUnit = true
+                    id = Int(String(name.suffix(name.count - 4))) ?? 0
+                }
+
+            }
+        }
+
+        if(isUnit)
+        {
+            if(self.unitSelected)
+            {
+                deselectAll()
+            }
+            for u in units
+            {
+                if u.id == id
+                {
+                    highlightMoves(r: u.yPosition,c: u.xPosition)
+                    u.selected = true
+                    self.unitSelected = true
+                    if(u.ranged == true)
+                    {
+                        highlightRangedAttack(r: u.yPosition,c: u.xPosition)
+                    }
                 }
             }
+
         }
         else
         {
@@ -354,12 +387,18 @@ class GameScene: SKScene {
                 {
                     if(squareNode.fillColor == selectMoveColor)
                     {
-                        if let unitNode = self.unitNode
+                        for u in units
                         {
-                            unitNode.xMove(xMov: row-unitNode.xPosition)
-                            unitNode.yMove(yMov: col-unitNode.yPosition)
-                            deselectAll()
+                            if u.selected
+                            {
+                                u.xMove(xMov: row-u.xPosition)
+                                u.yMove(yMov: col-u.yPosition)
+                                u.selected = false
+                                self.unitSelected = false
+                                deselectAll()
+                            }
                         }
+
 
                     }
                 }
@@ -466,13 +505,14 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        if let unitNode = self.unitNode
+        
+        for unitNode in units
         {
             if(unitNode.dirty)
             {
                 if unitNode.alive
                 {
-                        unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
+                    unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
                     unitNode.clean()
                 }
                 else

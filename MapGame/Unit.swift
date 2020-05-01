@@ -26,10 +26,10 @@ class Unit: SKShapeNode
         super.init()
     }
 
-    convenience init(xPosition: Int, yPosition: Int, side: Int)
+    convenience init(xPosition: Int, yPosition: Int, side: Int,id: Int)
     {
         self.init()
-        self.setUp(xP: xPosition,yP: yPosition, side: side)
+        self.setUp(xP: xPosition,yP: yPosition, side: side,id: id)
         // Do stuff
      }
 
@@ -38,11 +38,12 @@ class Unit: SKShapeNode
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUp(xP: Int, yP: Int, side: Int)
+    func setUp(xP: Int, yP: Int, side: Int,id: Int)
     {
         self.xPosition = xP
         self.yPosition = yP
-        self.name = "unit"
+        self.name = "unit"+String(id)
+        self.id = id
         self.lineWidth = 5
         self.zPosition = 1
         let radius = CGFloat.init(side)
