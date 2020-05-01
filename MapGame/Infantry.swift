@@ -18,7 +18,7 @@ class Infantry: Unit
     convenience init(xPosition: Int, yPosition: Int, side: Int,id: Int,team: Int)
     {
         self.init()
-        let radius = CGFloat.init(side)
+        let radius = CGFloat.init(4*side/5)
         let rect = CGRect(x:-radius,y:-radius,width:radius * 2,height:radius * 2)
         self.path = CGPath(ellipseIn: rect, transform: nil)
         self.setUp(xP: xPosition,yP: yPosition, side: side,id: id,team: team)

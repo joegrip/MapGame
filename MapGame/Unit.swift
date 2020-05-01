@@ -22,8 +22,8 @@ class Unit: SKShapeNode
     var alive = true
     var id = 0
     var team = 0
-    let teamColors = [ 0: SKColor.green,
-                       1: SKColor.red
+    let teamColors = [ 0: SKColor.white,
+                       1: SKColor.darkGray
                      ]
     
     override init()
@@ -94,6 +94,12 @@ class Unit: SKShapeNode
     func rangedAttack(defender: Unit)
     {
         defender.takeDamage(damage: self.damage)
+    }
+    
+    func attack(defender: Unit)
+    {
+        defender.takeDamage(damage: self.damage)
+        self.takeDamage(damage: defender.damage/2)
     }
     
     func clean()

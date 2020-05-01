@@ -38,8 +38,8 @@ struct Matrix<T> {
 var t = SKShapeNode.init(rectOf: CGSize.init(width: 1, height: 1))
 class Board
 {
-    var NUM_ROWS = 10
-    var NUM_COLUMNS = 10
+    var NUM_ROWS = 11
+    var NUM_COLUMNS = 11
     var grid:Matrix<SKShapeNode?> = Matrix(rows: 1, columns: 1,defaultValue: t)
     
     
