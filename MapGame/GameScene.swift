@@ -50,18 +50,15 @@ class GameScene: SKScene {
         }
         
         
+        addCannon(r:5,c:5,team:0,id:0)
+        addCannon(r:0,c:0,team:1,id:1)
         //let wU = (self.size.width + self.size.height) * 0.05
         //self.unitNode = Unit.init(side: Int(self.size.height)/20,cornerRadius: wU * 0.1)
         //self.unitNode = SKShapeNode.init(rectOf: CGSize.init(width: Int(self.size.height)/20, height: Int(self.size.height)/20), cornerRadius: wU * 0.1)
         
         
-        var unitNode = Unit.init(xPosition: 5, yPosition: 5,side: Int(self.size.height)/40, id: 0,team: 0)
-        //if let unitNode = unitNode1
-      //  {
-            unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
-            self.addChild(unitNode)
-            units.append(unitNode)
-        
+
+        /*
         unitNode = Unit.init(xPosition: 0, yPosition: 0,side: Int(self.size.height)/40, id: 1,team: 1)
           //if let unitNode = unitNode1
         //  {
@@ -71,8 +68,20 @@ class GameScene: SKScene {
 
      //   }
         
+        */
+        
         
         createGrid()
+    }
+    
+    func addCannon(r: Int, c: Int, team: Int, id: Int)
+    {
+          let unitNode = Cannon.init(xPosition: r, yPosition: c,side: Int(self.size.height)/40, id: id,team: team)
+          //if let unitNode = unitNode1
+        //  {
+              unitNode.position = CGPoint(x: xUnitGridToCoord(c: unitNode.xPosition), y: yUnitGridToCoord(r: unitNode.yPosition))
+              self.addChild(unitNode)
+              units.append(unitNode)
     }
     
     func createGrid()
@@ -553,7 +562,12 @@ class GameScene: SKScene {
                 }
                 else
                 {
+                    if let index = units.firstIndex(of: unitNode)
+                    {
+                        units.remove(at: index)
+                    }
                     unitNode.run(SKAction.removeFromParent())
+                    
                 }
 
             }

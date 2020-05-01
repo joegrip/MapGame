@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C13A960245CD017000178D2 /* Cannon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C13A95F245CD017000178D2 /* Cannon.swift */; };
 		8C3C062C2458C3D300FDE185 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C062B2458C3D300FDE185 /* AppDelegate.swift */; };
 		8C3C062E2458C3D300FDE185 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8C3C062D2458C3D300FDE185 /* GameScene.sks */; };
 		8C3C06302458C3D300FDE185 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8C3C062F2458C3D300FDE185 /* Actions.sks */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C13A95F245CD017000178D2 /* Cannon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cannon.swift; sourceTree = "<group>"; };
 		8C3C06282458C3D300FDE185 /* MapGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C3C062B2458C3D300FDE185 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C3C062D2458C3D300FDE185 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				8C3C062D2458C3D300FDE185 /* GameScene.sks */,
 				8C3C062F2458C3D300FDE185 /* Actions.sks */,
 				8C3C06312458C3D300FDE185 /* GameScene.swift */,
+				8C13A95F245CD017000178D2 /* Cannon.swift */,
 				8C3C06332458C3D300FDE185 /* ViewController.swift */,
 				8C3C06352458C3D400FDE185 /* Assets.xcassets */,
 				8C3C06372458C3D400FDE185 /* Main.storyboard */,
@@ -281,6 +284,7 @@
 				8C3C06602458CDCF00FDE185 /* Unit.swift in Sources */,
 				8C3C06642458E2B900FDE185 /* Board.swift in Sources */,
 				8C3C06622458E23800FDE185 /* Tile.swift in Sources */,
+				8C13A960245CD017000178D2 /* Cannon.swift in Sources */,
 				8C3C0666245917CC00FDE185 /* GlobalConstants.swift in Sources */,
 				8C3C06322458C3D300FDE185 /* GameScene.swift in Sources */,
 				8C3C062C2458C3D300FDE185 /* AppDelegate.swift in Sources */,
