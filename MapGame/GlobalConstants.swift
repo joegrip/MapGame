@@ -7,5 +7,5 @@
 //
 
 import Foundation
-let num_rows = 10
-let num_cols = 10
+let num_rows = 11
+let num_cols = 11

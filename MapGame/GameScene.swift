@@ -24,7 +24,7 @@ class GameScene: SKScene {
     private var unitSelected: Bool = false
     private var id: Int = 0
     var units: Array<Unit> = Array()
-    let board = Board(r: 10, c: 10)
+    let board = Board(r: 11, c: 11)
     let gridArray: Array<SKShapeNode> = Array()
     let selectMoveColor = SKColor.blue
     let selectAttackColor = SKColor(red:80,green: 0,blue:
@@ -83,7 +83,7 @@ class GameScene: SKScene {
                 {
                     squareNode.lineWidth = 3
                     squareNode.fillColor = tileColor
-                    squareNode.name = String(r)+String(c)
+                    squareNode.name = String(r)+","+String(c)
                     squareNode.strokeColor = SKColor.black
                     squareNode.position = CGPoint(x: xUnitGridToCoord(c: c), y: yUnitGridToCoord(r: r))
                     squareNode.zPosition = 0.5
@@ -475,6 +475,18 @@ class GameScene: SKScene {
             }
         }
     }
+    
+    func tileOccupied(row: Int, col: Int) -> Bool
+    {
+        for u in units
+        {
+            if u.xPosition == row && u.yPosition == col
+            {
+                return true
+            }
+        }
+        return false
+    }
     override func mouseDown(with event: NSEvent) {
 
         //self.touchDown(atPoint: event.location(in: self))
@@ -523,7 +535,7 @@ class GameScene: SKScene {
                                 {
                                     if(u1.ranged)
                                     {
-                                        if let squareNode = board.grid[u.xPosition,u.yPosition]
+                                        if let squareNode = board.grid[u.yPosition,u.xPosition]
                                         {
                                             if(squareNode.fillColor == selectMoveColor || squareNode.fillColor == selectAttackColor)
                                             {
@@ -538,10 +550,30 @@ class GameScene: SKScene {
                                     }
                                     else
                                     {
-                                        if let squareNode = board.grid[u.xPosition,u.yPosition]
+                                        if let squareNode = board.grid[u.yPosition,u.xPosition]
                                         {
                                             if(squareNode.fillColor == selectMoveColor)
                                             {
+                                                let xs = u1.xPosition-u.xPosition
+                                                let ys = u1.yPosition-u.yPosition
+                                                let dist = Double(xs*xs+ys*ys)
+                                                var xp = u1.xPosition
+                                                var yp = u1
+                                                    .yPosition
+                                                if(dist > 2 )
+                                                {
+                                                    xp = (u1.xPosition+u.xPosition)/2
+                                                    yp = (u1.yPosition+u.yPosition)/2
+                                                    if(tileOccupied(row: xp, col: yp))
+                                                    {
+                                                        u1.selected = false
+                                                        u.selected = false
+                                                        self.unitSelected = false
+                                                        deselectAll()
+                                                        return
+                                                    }
+                                                    u1.dirty = true
+                                                }
                                                 u1.attack(defender: u)
                                                 u1.selected = false
                                                 u.selected = false
@@ -554,17 +586,12 @@ class GameScene: SKScene {
                                                 }
                                                 else
                                                 {
-                                                    let xs = u1.xPosition-u.xPosition
-                                                    let ys = u1.yPosition-u.yPosition
-                                                    let dist = Double(xs*xs+ys*ys)
-                                                    if(dist > 2 )
-                                                    {
-                                                        u1.xPosition = (u1.xPosition+u.xPosition)/2
-                                                        u1.yPosition = (u1.yPosition+u.yPosition)/2
-                                                        u1.dirty = true
-                                                        
-                                                    }
+                                                    u1.xPosition = xp
+                                                    u1.yPosition = yp
+                                                    u1.dirty = true
                                                 }
+               
+                                            
                                                  deselectAll()
                                                  return
                                             }
@@ -616,44 +643,56 @@ class GameScene: SKScene {
         }
         else
         {
-            if let num = Int(firstTouchedNode ?? "11")
+            var col = 0
+            var row = 0
+            if let st = firstTouchedNode
             {
-                let col = Int(num)/10
-                let row = Int(num)%10
-                if let squareNode = board.grid[col,row]
+                let arr = st.components(separatedBy: ",")
+                if let num = Int(arr[0])
                 {
-                    var occupied = false
-                    if(squareNode.fillColor == selectMoveColor)
+                    col = num
+                }
+                if let num = Int(arr[1])
+                {
+                    row = num
+                }
+            }
+            
+            if let squareNode = board.grid[col,row]
+            {
+                var occupied = false
+                if(squareNode.fillColor == selectMoveColor)
+                {
+                    for u in units
+                    {
+                        if u.xPosition == row && u.yPosition == col
+                        {
+                            occupied = true
+                            print("error")
+                            break
+                        }
+                    }
+                    
+                    if(!occupied)
                     {
                         for u in units
                         {
-                            if u.xPosition == row && u.yPosition == col
+                            if u.selected
                             {
-                                occupied = true
-                                break
+                                u.xMove(xMov: row-u.xPosition)
+                                u.yMove(yMov: col-u.yPosition)
+                                u.selected = false
+                                self.unitSelected = false
+                                deselectAll()
                             }
                         }
-                        
-                        if(!occupied)
-                        {
-                            for u in units
-                            {
-                                if u.selected
-                                {
-                                    u.xMove(xMov: row-u.xPosition)
-                                    u.yMove(yMov: col-u.yPosition)
-                                    u.selected = false
-                                    self.unitSelected = false
-                                    deselectAll()
-                                }
-                            }
-                        }
-
-
                     }
-                }
 
+
+                }
             }
+
+            
         }
 
     }
@@ -735,9 +774,9 @@ class GameScene: SKScene {
         
     }
     
-    override func update(_ currentTime: TimeInterval) {
+    override func update(_ currentTime: TimeInterval)
+    {
         // Called before each frame is rendered
-        
         for unitNode in units
         {
             if(unitNode.dirty)

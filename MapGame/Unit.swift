@@ -22,7 +22,7 @@ class Unit: SKShapeNode
     var alive = true
     var id = 0
     var team = 0
-    let teamColors = [ 0: SKColor.white,
+    let teamColors = [ 0: SKColor(white: 200, alpha: 1),
                        1: SKColor.darkGray
                      ]
     
@@ -62,7 +62,7 @@ class Unit: SKShapeNode
     
     func xMove(xMov: Int)
     {
-        if(self.xPosition + xMov > -1 && self.xPosition+xMov < 10 )
+        if(self.xPosition + xMov > -1 && self.xPosition+xMov < num_rows )
         {
             self.xPosition = self.xPosition + xMov
             self.dirty = true;
@@ -73,16 +73,16 @@ class Unit: SKShapeNode
     
     func yMove(yMov: Int)
     {
-        if(self.yPosition + yMov > -1 && self.yPosition+yMov < 10)
+        if(self.yPosition + yMov > -1 && self.yPosition+yMov < num_cols)
         {
             self.yPosition = self.yPosition + yMov
             self.dirty = true;
         }
     }
     
-    func takeDamage(damage: Int)
+    func takeDamage(attacker: Unit)
     {
-        self.health = self.health - damage
+        self.health = self.health - attacker.health*(attacker.damage)/100
         if(self.health <= 0)
         {
             alive = false
@@ -93,13 +93,13 @@ class Unit: SKShapeNode
     
     func rangedAttack(defender: Unit)
     {
-        defender.takeDamage(damage: self.damage)
+        defender.takeDamage(attacker: self)
     }
     
     func attack(defender: Unit)
     {
-        defender.takeDamage(damage: self.damage)
-        self.takeDamage(damage: defender.damage/2)
+        defender.takeDamage(attacker: self)
+        self.takeDamage(attacker: defender)
     }
     
     func clean()

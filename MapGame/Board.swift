@@ -45,7 +45,9 @@ class Board
     
     init(r: Int, c: Int)
     {
-        self.grid = Matrix(rows: self.NUM_ROWS, columns: self.NUM_COLUMNS,defaultValue: t)
+        self.NUM_ROWS = r
+        self.NUM_COLUMNS = c
+        self.grid = Matrix(rows: r, columns: c,defaultValue: t)
         for r in 0...(NUM_ROWS-1)
         {
             for c in 0...(NUM_COLUMNS-1)

@@ -8,5 +8,9 @@ Ranged: Slow but ranged attack. Need more range
 Horse: Fast and devastating to ranged
 
 
-Test attacking: Bugs with selecting
+TODO:
+	Select Unit see window at side
+	Each team has a certain amount of moves per turn
+
+
 Idea: Ranged wins games. Melee and Horse are there to attack and defend ranged
