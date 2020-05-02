@@ -23,6 +23,7 @@
 		8C3C06622458E23800FDE185 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C06612458E23800FDE185 /* Tile.swift */; };
 		8C3C06642458E2B900FDE185 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C06632458E2B900FDE185 /* Board.swift */; };
 		8C3C0666245917CC00FDE185 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C0665245917CC00FDE185 /* GlobalConstants.swift */; };
+		8CA6CFBF245E207C00B93922 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA6CFBE245E207C00B93922 /* Team.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		8C3C06612458E23800FDE185 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		8C3C06632458E2B900FDE185 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		8C3C0665245917CC00FDE185 /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
+		8CA6CFBE245E207C00B93922 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				8C3C063B2458C3D400FDE185 /* MapGame.entitlements */,
 				8C3C065F2458CDCF00FDE185 /* Unit.swift */,
 				8C3C0665245917CC00FDE185 /* GlobalConstants.swift */,
+				8CA6CFBE245E207C00B93922 /* Team.swift */,
 				8C3C06612458E23800FDE185 /* Tile.swift */,
 				8C3C06632458E2B900FDE185 /* Board.swift */,
 			);
@@ -294,6 +297,7 @@
 				8C13A960245CD017000178D2 /* Cannon.swift in Sources */,
 				8C3C0666245917CC00FDE185 /* GlobalConstants.swift in Sources */,
 				8C3C06322458C3D300FDE185 /* GameScene.swift in Sources */,
+				8CA6CFBF245E207C00B93922 /* Team.swift in Sources */,
 				8C13A962245CD32F000178D2 /* Infantry.swift in Sources */,
 				8C3C062C2458C3D300FDE185 /* AppDelegate.swift in Sources */,
 			);

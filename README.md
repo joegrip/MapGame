@@ -8,9 +8,14 @@ Ranged: Slow but ranged attack. Need more range
 Horse: Fast and devastating to ranged
 
 
-TODO:
+Features:
 	Select Unit see window at side
-	Each team has a certain amount of moves per turn
+	Each unit can only attack once per turn
 
+Balance:
+	Cannons have more range
+	Add defense stat
+	Maybe flanking manu
+	General Unit
 
 Idea: Ranged wins games. Melee and Horse are there to attack and defend ranged

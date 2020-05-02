@@ -21,9 +21,15 @@ class GameScene: SKScene {
     private var unitNode : Unit? //SKShapeNode?
     private var squareNode : SKShapeNode?
     private var spinnyNode : SKShapeNode?
+    private var turnLabel  : SKLabelNode?
+    private var teamLabel  : SKLabelNode?
     private var unitSelected: Bool = false
     private var id: Int = 0
+    private var currentTeam : Int = 0
+    private var teamSelected: Int = 0
     var units: Array<Unit> = Array()
+    var teams: Array<Team> = Array()
+    
     let board = Board(r: 11, c: 11)
     let gridArray: Array<SKShapeNode> = Array()
     let selectMoveColor = SKColor.blue
@@ -33,13 +39,83 @@ class GameScene: SKScene {
 
 
 
-    override func sceneDidLoad() {
-
+    override func sceneDidLoad()
+    {
         self.lastUpdateTime = 0
+        setTeams()
         createGrid()
+        createGraphics()
         setPieces()
     }
     
+    func createGraphics()
+    {
+        
+        self.teamLabel = SKLabelNode()
+        if let lab = self.teamLabel
+        {
+            lab.text = "Team 0"
+            lab.fontName = "Roboto"
+            lab.fontSize = 30
+            lab.position = CGPoint(x: 3.8*self.size.width/10, y: self.size.height/4)
+            self.addChild(lab)
+        }
+ 
+        
+        self.turnLabel = SKLabelNode()
+        if let lab = self.turnLabel
+        {
+            lab.text = "Moves Left: 4"
+            lab.fontName = "Roboto"
+            lab.fontSize = 20
+            lab.position = CGPoint(x: 3.8*self.size.width/10, y: self.size.height/5)
+            self.addChild(lab)
+        }
+        
+
+        
+    }
+    func setTeams()
+    {
+        let team = Team.init(id: 0)
+        team.startTurn()
+        let team1 = Team.init(id: 1)
+        team1.endTurn()
+        teams.append(team)
+        teams.append(team1)
+    }
+    
+    func endTurn()
+    {
+        if(currentTeam == 0)
+        {
+            currentTeam = 1
+            teams[0].endTurn()
+            teams[1].startTurn()
+            if let lab = self.teamLabel
+            {
+                lab.text = "Team 1"
+            }
+            if let lab = self.turnLabel
+            {
+                lab.text = teams[1].movesToString()
+            }
+        }
+        else
+        {
+            currentTeam = 0
+            teams[1].endTurn()
+            teams[0].startTurn()
+            if let lab = self.teamLabel
+            {
+                lab.text = "Team 0"
+            }
+            if let lab = self.turnLabel
+            {
+                lab.text = teams[0].movesToString()
+            }
+        }
+    }
     func addCannon(r: Int, c: Int, team: Int)
     {
           
@@ -539,6 +615,15 @@ class GameScene: SKScene {
                                         {
                                             if(squareNode.fillColor == selectMoveColor || squareNode.fillColor == selectAttackColor)
                                             {
+                                                if(!teams[u1.team].canMove())
+                                                {
+                                                    return
+                                                }
+                                                teams[u1.team].useMove()
+                                                if let lab = self.turnLabel
+                                                {
+                                                    lab.text = teams[u1.team].movesToString()
+                                                }
                                                 u1.rangedAttack(defender: u)
                                                 u1.selected = false
                                                 u.selected = false
@@ -554,6 +639,15 @@ class GameScene: SKScene {
                                         {
                                             if(squareNode.fillColor == selectMoveColor)
                                             {
+                                                if(!teams[u1.team].canMove())
+                                                {
+                                                    return
+                                                }
+                                                teams[u1.team].useMove()
+                                                if let lab = self.turnLabel
+                                                {
+                                                    lab.text = teams[u1.team].movesToString()
+                                                }
                                                 let xs = u1.xPosition-u.xPosition
                                                 let ys = u1.yPosition-u.yPosition
                                                 let dist = Double(xs*xs+ys*ys)
@@ -625,6 +719,10 @@ class GameScene: SKScene {
                         }
                     }
                     
+                    if(u.team != currentTeam)
+                    {
+                        return
+                    }
                     highlightMoves(r: u.yPosition,c: u.xPosition)
                     if(u.fast)
                     {
@@ -643,6 +741,7 @@ class GameScene: SKScene {
         }
         else
         {
+
             var col = 0
             var row = 0
             if let st = firstTouchedNode
@@ -679,6 +778,15 @@ class GameScene: SKScene {
                         {
                             if u.selected
                             {
+                                if(!teams[u.team].canMove())
+                                {
+                                    return
+                                }
+                                teams[u.team].useMove()
+                                if let lab = self.turnLabel
+                                {
+                                    lab.text = teams[u.team].movesToString()
+                                }
                                 u.xMove(xMov: row-u.xPosition)
                                 u.yMove(yMov: col-u.yPosition)
                                 u.selected = false
@@ -709,29 +817,8 @@ class GameScene: SKScene {
 
         switch event.keyCode {
 
-        case 125:
-            if let unitNode = self.unitNode
-            {
-                unitNode.yMove(yMov: -1)
-            }
-            
-        case 126:
-            if let unitNode = self.unitNode
-            {
-                unitNode.yMove(yMov: 1)
-            }
-            
-        case 124:
-            if let unitNode = self.unitNode
-            {
-                unitNode.xMove(xMov: 1)
-            }
-            
-        case 123:
-            if let unitNode = self.unitNode
-            {
-                unitNode.xMove(xMov: -1)
-            }
+        case 49:
+            endTurn()
         default:
             break
             //print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
