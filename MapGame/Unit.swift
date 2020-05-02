@@ -16,6 +16,7 @@ class Unit: SKShapeNode
     var health = 100;
     var dirty = false
     var selected = false
+    var hasAttacked = false
     var ranged = false
     var damage = 50
     var fast = false

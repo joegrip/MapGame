@@ -33,8 +33,8 @@ class GameScene: SKScene {
     let board = Board(r: 11, c: 11)
     let gridArray: Array<SKShapeNode> = Array()
     let selectMoveColor = SKColor.blue
-    let selectAttackColor = SKColor(red:80,green: 0,blue:
-        0,alpha: 1)
+    let selectAttackColor = SKColor.red//(red:80,green: 0,blue:
+        //0,alpha: 1)
     let tileColor = SKColor.lightGray
 
 
@@ -87,6 +87,13 @@ class GameScene: SKScene {
     
     func endTurn()
     {
+        for u in units
+        {
+            if(u.hasAttacked)
+            {
+                u.hasAttacked = false
+            }
+        }
         if(currentTeam == 0)
         {
             currentTeam = 1
@@ -212,29 +219,15 @@ class GameScene: SKScene {
 
 
     func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
- 
 
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = selectMoveColor
-            self.addChild(n)
-        }
+
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = selectAttackColor
-            self.addChild(n)
-        }
+
     }
     
     
@@ -611,20 +604,30 @@ class GameScene: SKScene {
                                 {
                                     if(u1.ranged)
                                     {
+                                        print("is ranged")
                                         if let squareNode = board.grid[u.yPosition,u.xPosition]
                                         {
                                             if(squareNode.fillColor == selectMoveColor || squareNode.fillColor == selectAttackColor)
                                             {
-                                                if(!teams[u1.team].canMove())
+                                                print("valid square selected")
+                                                if(u1.hasAttacked == true)
                                                 {
+                                                    print("attack fail")
                                                     return
                                                 }
+                                                if(!teams[u1.team].canMove())
+                                                {
+                                                    print("team fail")
+                                                    return
+                                                }
+                                                print("made it here")
                                                 teams[u1.team].useMove()
                                                 if let lab = self.turnLabel
                                                 {
                                                     lab.text = teams[u1.team].movesToString()
                                                 }
                                                 u1.rangedAttack(defender: u)
+                                                u1.hasAttacked = true
                                                 u1.selected = false
                                                 u.selected = false
                                                 self.unitSelected = false
@@ -639,6 +642,10 @@ class GameScene: SKScene {
                                         {
                                             if(squareNode.fillColor == selectMoveColor)
                                             {
+                                                if(u1.hasAttacked == true)
+                                                {
+                                                    return
+                                                }
                                                 if(!teams[u1.team].canMove())
                                                 {
                                                     return
@@ -669,6 +676,9 @@ class GameScene: SKScene {
                                                     u1.dirty = true
                                                 }
                                                 u1.attack(defender: u)
+                                                u1.hasAttacked = true
+
+                                                
                                                 u1.selected = false
                                                 u.selected = false
                                                 self.unitSelected = false
@@ -685,7 +695,6 @@ class GameScene: SKScene {
                                                     u1.dirty = true
                                                 }
                
-                                            
                                                  deselectAll()
                                                  return
                                             }
