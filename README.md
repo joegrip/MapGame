@@ -11,10 +11,12 @@ Horse: Fast and devastating to ranged
 Features:
 	Select Unit see window at side
 	Each unit can only attack once per turn
+	Some dead tiles. Randomly placed in center. Can't go through. Board may not be big enough
 
 Bugs:
 	Ranged color must be exactly red
 	Should probably gives tiles own class with move select and ranged select vars
+
 Balance:
 	Cannons have more range
 	Add defense stat

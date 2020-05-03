@@ -350,6 +350,46 @@ class GameScene: SKScene {
     }
     func highlightRangedAttack(r: Int, c: Int)
     {
+        
+        if(c+3 < board.NUM_COLUMNS)
+        {
+
+            if let squareNode = board.grid[r,c+3]
+            {
+                squareNode.fillColor = selectAttackColor
+            }
+            
+            if(r-2 > -1)
+            {
+              if let squareNode = board.grid[r-2,c+3]
+              {
+                  squareNode.fillColor = selectAttackColor
+              }
+            }
+            if(r-1 > -1)
+            {
+              if let squareNode = board.grid[r-1,c+3]
+              {
+                squareNode.fillColor = selectAttackColor
+              }
+            }
+            if(r+1 < board.NUM_ROWS)
+            {
+              if let squareNode = board.grid[r+1,c+3]
+              {
+                squareNode.fillColor = selectAttackColor
+              }
+            }
+            if(r+2 < board.NUM_ROWS)
+            {
+                if let squareNode = board.grid[r+2,c+3]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+
+
+        }
         if(r-2 > -1)
           {
 
@@ -464,6 +504,252 @@ class GameScene: SKScene {
                 }
             }
           }
+        if(r+3 < board.NUM_ROWS)
+        {
+
+            if let squareNode = board.grid[r+3,c]
+            {
+                squareNode.fillColor = selectAttackColor
+            }
+            
+            if(c-3 > -1)
+            {
+                if let squareNode = board.grid[r+3,c-3]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+            if(c-2 > -1)
+            {
+              if let squareNode = board.grid[r+3,c-2]
+              {
+                  squareNode.fillColor = selectAttackColor
+              }
+            }
+            if(c-1 > -1)
+            {
+              if let squareNode = board.grid[r+3,c-1]
+              {
+                squareNode.fillColor = selectAttackColor
+              }
+            }
+            if(c+1 < board.NUM_COLUMNS)
+            {
+              if let squareNode = board.grid[r+3,c+1]
+              {
+                squareNode.fillColor = selectAttackColor
+              }
+            }
+            if(c+2 < board.NUM_COLUMNS)
+            {
+                if let squareNode = board.grid[r+3,c+2]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+            if(c+3 < board.NUM_COLUMNS)
+            {
+              if let squareNode = board.grid[r+3,c+3]
+              {
+                  squareNode.fillColor = selectAttackColor
+              }
+            }
+          if(c-1 > -1)
+          {
+              if let squareNode = board.grid[r-2,c-1]
+              {
+                  squareNode.fillColor = selectAttackColor
+              }
+          }
+          if(c+1 < board.NUM_COLUMNS)
+          {
+              if let squareNode = board.grid[r-2,c+1]
+              {
+                  squareNode.fillColor = selectAttackColor
+              }
+          }
+        }
+        if(r-3 > -1)
+          {
+
+              if let squareNode = board.grid[r-3,c]
+              {
+                  squareNode.fillColor = selectAttackColor
+              }
+              
+              if(c-3 > -1)
+              {
+                  if let squareNode = board.grid[r-3,c-3]
+                  {
+                      squareNode.fillColor = selectAttackColor
+                  }
+              }
+              if(c-2 > -1)
+              {
+                if let squareNode = board.grid[r-3,c-2]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+              }
+              if(c-1 > -1)
+              {
+                if let squareNode = board.grid[r-3,c-1]
+                {
+                  squareNode.fillColor = selectAttackColor
+                }
+              }
+              if(c+1 < board.NUM_COLUMNS)
+              {
+                if let squareNode = board.grid[r-3,c+1]
+                {
+                  squareNode.fillColor = selectAttackColor
+                }
+              }
+              if(c+2 < board.NUM_COLUMNS)
+              {
+                  if let squareNode = board.grid[r-3,c+2]
+                  {
+                      squareNode.fillColor = selectAttackColor
+                  }
+              }
+              if(c+3 < board.NUM_COLUMNS)
+              {
+                if let squareNode = board.grid[r-3,c+3]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+              }
+            if(c-1 > -1)
+            {
+                if let squareNode = board.grid[r-3,c-1]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+            if(c+1 < board.NUM_COLUMNS)
+            {
+                if let squareNode = board.grid[r-3,c+1]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+          }
+          if(c-2 > -1)
+          {
+              if let squareNode = board.grid[r,c-2]
+              {
+                  squareNode.fillColor = selectAttackColor
+              }
+            if(r-1 > -1)
+            {
+                if let squareNode = board.grid[r-1,c-2]
+                 {
+                     squareNode.fillColor = selectAttackColor
+                 }
+            }
+            if(r+1 < board.NUM_ROWS)
+            {
+                if let squareNode = board.grid[r+1,c-2]
+                 {
+                     squareNode.fillColor = selectAttackColor
+                 }
+            }
+          }
+          if(c+2 < board.NUM_COLUMNS)
+          {
+              if let squareNode = board.grid[r,c+2]
+              {
+                  squareNode.fillColor = selectAttackColor
+              }
+            if(r-1 > -1)
+            {
+                if let squareNode = board.grid[r-1,c+2]
+                 {
+                     squareNode.fillColor = selectAttackColor
+                 }
+            }
+            if(r+1 < board.NUM_ROWS)
+            {
+                if let squareNode = board.grid[r+1,c+2]
+                 {
+                     squareNode.fillColor = selectAttackColor
+                 }
+            }
+          }
+          if(r+2 < board.NUM_ROWS)
+          {
+
+              if let squareNode = board.grid[r+2,c]
+              {
+                  squareNode.fillColor = selectAttackColor
+              }
+              if(c-2 > -1)
+              {
+                  if let squareNode = board.grid[r+2,c-2]
+                  {
+                      squareNode.fillColor = selectAttackColor
+                  }
+              }
+              if(c+2 < board.NUM_COLUMNS)
+              {
+                  if let squareNode = board.grid[r+2,c+2]
+                  {
+                      squareNode.fillColor = selectAttackColor
+                  }
+              }
+            if(c-1 > -1)
+            {
+                if let squareNode = board.grid[r+2,c-1]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+            if(c+1 < board.NUM_COLUMNS)
+            {
+                if let squareNode = board.grid[r+2,c+1]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+          }
+        
+        if(c-3 < board.NUM_COLUMNS)
+        {
+            if let squareNode = board.grid[r,c-3]
+            {
+                squareNode.fillColor = selectAttackColor
+            }
+            if(r-1 > -1)
+            {
+                if let squareNode = board.grid[r-1,c-3]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+            if(r-2 > -1)
+            {
+                if let squareNode = board.grid[r-2,c-3]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+            if(r+1 < board.NUM_ROWS)
+            {
+                if let squareNode = board.grid[r+1,c-3]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+            if(r+2 < board.NUM_ROWS)
+            {
+                if let squareNode = board.grid[r+2,c-3]
+                {
+                    squareNode.fillColor = selectAttackColor
+                }
+            }
+        }
+        
+        
     }
 
     func highlightMoves(r: Int, c: Int)
@@ -604,23 +890,18 @@ class GameScene: SKScene {
                                 {
                                     if(u1.ranged)
                                     {
-                                        print("is ranged")
                                         if let squareNode = board.grid[u.yPosition,u.xPosition]
                                         {
                                             if(squareNode.fillColor == selectMoveColor || squareNode.fillColor == selectAttackColor)
                                             {
-                                                print("valid square selected")
                                                 if(u1.hasAttacked == true)
                                                 {
-                                                    print("attack fail")
                                                     return
                                                 }
                                                 if(!teams[u1.team].canMove())
                                                 {
-                                                    print("team fail")
                                                     return
                                                 }
-                                                print("made it here")
                                                 teams[u1.team].useMove()
                                                 if let lab = self.turnLabel
                                                 {
@@ -776,7 +1057,6 @@ class GameScene: SKScene {
                         if u.xPosition == row && u.yPosition == col
                         {
                             occupied = true
-                            print("error")
                             break
                         }
                     }
