@@ -18,7 +18,6 @@ Bugs:
 	Should probably gives tiles own class with move select and ranged select vars
 
 Balance:
-	Cannons have more range
 	Add defense stat
 	Maybe flanking manu
 	General Unit
