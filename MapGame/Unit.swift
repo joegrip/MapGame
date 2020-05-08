@@ -17,6 +17,7 @@ class Unit: SKShapeNode
     var dirty = false
     var selected = false
     var hasAttacked = false
+    var hasMoved = false
     var ranged = false
     var damage = 50
     var fast = false
@@ -69,7 +70,11 @@ class Unit: SKShapeNode
             self.dirty = true;
 
         }
-
+    }
+    
+    func className() -> String
+    {
+        return "Unit"
     }
     
     func yMove(yMov: Int)
@@ -90,6 +95,11 @@ class Unit: SKShapeNode
             dirty = true
         }
         
+    }
+    
+    func healthToString() -> String
+    {
+        return "Health: "+String(self.health)
     }
     
     func rangedAttack(defender: Unit)

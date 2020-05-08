@@ -21,7 +21,9 @@ class GameScene: SKScene {
     private var unitNode : Unit? //SKShapeNode?
     private var squareNode : SKShapeNode?
     private var spinnyNode : SKShapeNode?
+    private var infoNode : SKShapeNode?
     private var turnLabel  : SKLabelNode?
+    
     private var teamLabel  : SKLabelNode?
     private var unitSelected: Bool = false
     private var id: Int = 0
@@ -45,7 +47,112 @@ class GameScene: SKScene {
         setTeams()
         createGrid()
         createGraphics()
+        createInfoWindow()
         setPieces()
+    }
+    
+    func createInfoWindow()
+    {
+        self.infoNode = SKShapeNode.init(rectOf: CGSize.init(width: Int(self.size.height)/4, height: Int(self.size.height/2.02)), cornerRadius: 2)
+        if let wind = self.infoNode
+        {
+            wind.position = CGPoint(x: Int(
+                -36.5*self.size.width/100),y:yUnitGridToCoord(r: 5))
+            wind.strokeColor = SKColor.white
+            self.addChild(wind)
+        }
+        
+        var lab = SKLabelNode()
+        lab.text = ""
+        lab.name = "unit type"
+        lab.fontSize =  30
+        lab.position = CGPoint(x: 0,y:-65)
+        lab.fontName = "Roboto"
+        self.infoNode?.addChild(lab)
+        
+        lab = SKLabelNode()
+        lab.text = ""
+        lab.name = "health"
+        lab.fontSize = 20
+        lab.position = CGPoint(x: -10,y:-100)
+        self.infoNode?.addChild(lab)
+        
+        lab = SKLabelNode()
+        lab.text = ""
+        lab.name = "moves left"
+        lab.fontSize = 20
+        lab.position = CGPoint(x: -10,y:-125)
+        self.infoNode?.addChild(lab)
+        
+        lab = SKLabelNode()
+        lab.text = ""
+        lab.name = "attacks left"
+        lab.fontSize = 20
+        lab.position = CGPoint(x: -10,y:-150)
+        self.infoNode?.addChild(lab)
+        
+        
+        let picture = SKSpriteNode(imageNamed: "Napoleon")
+        picture.position = CGPoint(x:0,y:100)
+        picture.name="picture"
+        self.infoNode?.addChild(picture)
+
+    }
+    
+    func updateInfoWindow(u: Unit)
+    {
+        if let hp = self.infoNode?.childNode(withName: "health") as! SKLabelNode?
+        {
+            hp.text = u.healthToString()
+        }
+        
+        if let ut = self.infoNode?.childNode(withName: "unit type") as! SKLabelNode?
+        {
+            ut.text = u.className()
+        }
+        
+        if let ut = self.infoNode?.childNode(withName: "moves left") as! SKLabelNode?
+        {
+            if u.hasMoved == true
+            {
+                ut.text = "Moves Left: 0"
+            }
+            else
+            {
+                ut.text = "Moves Left: 1"
+            }
+        }
+        
+        if let ut = self.infoNode?.childNode(withName: "attacks left") as! SKLabelNode?
+        {
+            if u.hasAttacked == true
+            {
+                ut.text = "Attacks Left: 0"
+            }
+            else
+            {
+                ut.text = "Attacks Left: 1"
+            }
+        }
+        
+        if let ssn = self.infoNode?.childNode(withName: "picture") as! SKSpriteNode?
+        {
+            if u.className == "MapGame.Infantry"
+            {
+                ssn.texture = SKTexture(imageNamed: "Infantry")//u.className)
+            }
+            else if u.className == "MapGame.Cavalry"
+            {
+                ssn.texture = SKTexture(imageNamed: "Cavalry")//u.className)
+            }
+            else if u.className == "MapGame.Cannon"
+            {
+                ssn.texture = SKTexture(imageNamed: "Cannon")//u.className)
+            }
+
+
+        }
+        
     }
     
     func createGraphics()
@@ -72,8 +179,6 @@ class GameScene: SKScene {
             self.addChild(lab)
         }
         
-
-        
     }
     func setTeams()
     {
@@ -92,6 +197,10 @@ class GameScene: SKScene {
             if(u.hasAttacked)
             {
                 u.hasAttacked = false
+            }
+            if(u.hasMoved)
+            {
+                u.hasMoved = false
             }
         }
         if(currentTeam == 0)
@@ -171,9 +280,9 @@ class GameScene: SKScene {
                     squareNode.position = CGPoint(x: xUnitGridToCoord(c: c), y: yUnitGridToCoord(r: r))
                     squareNode.zPosition = 0.5
                     board.grid[r,c] = squareNode
-                        self.addChild(squareNode)
+                    self.addChild(squareNode)
                 
-                    }
+                }
 
             }
         }
@@ -713,7 +822,7 @@ class GameScene: SKScene {
             }
           }
         
-        if(c-3 < board.NUM_COLUMNS)
+        if(c-3 > -1)
         {
             if let squareNode = board.grid[r,c-3]
             {
@@ -842,7 +951,8 @@ class GameScene: SKScene {
         }
         return false
     }
-    override func mouseDown(with event: NSEvent) {
+    override func mouseDown(with event: NSEvent)
+    {
 
         //self.touchDown(atPoint: event.location(in: self))
         let location = event.location(in: self)
@@ -851,6 +961,20 @@ class GameScene: SKScene {
         var id = 0
         if let name = firstTouchedNode
         {
+            if name == "picture"
+            {
+                return
+            }
+            if name == "unit type"
+            {
+                return
+            }
+            if name == "health"
+            {
+                return
+            }
+    
+
             if name.count > 4
             {
                 let substr = name.prefix(4)
@@ -913,6 +1037,7 @@ class GameScene: SKScene {
                                                 u.selected = false
                                                 self.unitSelected = false
                                                 deselectAll()
+                                                updateInfoWindow(u: u1)
                                                 return
                                             }
                                         }
@@ -958,6 +1083,7 @@ class GameScene: SKScene {
                                                 }
                                                 u1.attack(defender: u)
                                                 u1.hasAttacked = true
+                                                updateInfoWindow(u: u1)
 
                                                 
                                                 u1.selected = false
@@ -1020,6 +1146,7 @@ class GameScene: SKScene {
 
                     }
                     u.selected = true
+                    updateInfoWindow(u: u)
                     self.unitSelected = true
                     if(u.ranged == true)
                     {
@@ -1067,6 +1194,10 @@ class GameScene: SKScene {
                         {
                             if u.selected
                             {
+                                if(u.hasMoved)
+                                {
+                                    return
+                                }
                                 if(!teams[u.team].canMove())
                                 {
                                     return
@@ -1080,6 +1211,8 @@ class GameScene: SKScene {
                                 u.yMove(yMov: col-u.yPosition)
                                 u.selected = false
                                 self.unitSelected = false
+                                u.hasMoved = true
+                                updateInfoWindow(u: u)
                                 deselectAll()
                             }
                         }

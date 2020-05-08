@@ -24,6 +24,11 @@ class Cannon: Unit
         self.setUp(xP: xPosition,yP: yPosition, side: side,id: id,team: team)
         self.ranged = true
      }
+    
+    override func className() -> String
+    {
+        return "Cannon"
+    }
 
     required init?(coder aDecoder: NSCoder)
     {

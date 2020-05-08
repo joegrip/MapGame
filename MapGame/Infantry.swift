@@ -25,6 +25,10 @@ class Infantry: Unit
         self.ranged = false
      }
 
+    override func className() -> String
+    {
+        return "Infantry"
+    }
     required init?(coder aDecoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")

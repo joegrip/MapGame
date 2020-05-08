@@ -36,6 +36,11 @@ class Cavalry: Unit
         self.ranged = false
         self.fast = true
      }
+    
+    override func className() -> String
+    {
+        return "Cavalry"
+    }
 
     required init?(coder aDecoder: NSCoder)
     {
